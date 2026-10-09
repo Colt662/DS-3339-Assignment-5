@@ -7,17 +7,36 @@
 # Output: 3
 
 def most_frequent(numbers):
-    # Your code here
-    pass
+    freq_dict = dict() #fast operations, key:value for number:frequency, space complexity depends on how unique the list is, more unique lists will have higher space complexity
+    for number in numbers: #Whole loop: O(n) on average, O(n^2) worst case if every hash collides and every insertion triggers resize
+        if number in freq_dict: #O(1) avg, O(n) worst if hash collision
+            freq_dict[number] = freq_dict[number] + 1 
+
+        else:
+            freq_dict[number] = 1 #O(1) avg, O(n) worst if resize
+
+
+    most_frequent = numbers[0]
+    highest_frequency = 1
+
+    for number, frequency in freq_dict.items(): #Whole loop is O(n) where n is the size of the frequency dictionairy, so for n as size or original list it is O(1) best case or O(n) worst case depending on # of unique items
+        if frequency > highest_frequency: 
+            most_frequent = number
+            highest_frequency = frequency
+
+    return most_frequent
+
+    
 
 """
+Info sourced from https://pythoncomplexity.com/builtins/dict/#complexity-reference
 Time and Space Analysis for problem 1:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(n) for no hash collisions or resizes
+- Worst-case: O(n^2) for every number causing hash collisions or resizes
+- Average-case: O(n) since hash collisions should be infrequent for most lists and operations that could involve resizing are amoritized to O(1)
+- Space complexity: O(n) if all items are unique, O(1) if all items are the same
+- Why this approach? Dictionaries have fast operations, integers in a similar range should have few hash collisions.
+- Could it be optimized? It could potentially be optimized if the number with the highest frequency was determined in the first loop, although it would still average O(n) time since every element of the list will always need to be accessed.
 """
 
 
@@ -29,8 +48,16 @@ Time and Space Analysis for problem 1:
 # Output: [4, 5, 6, 7]
 
 def remove_duplicates(nums):
-    # Your code here
-    pass
+    unqiues_list = set() 
+    output_list = list()
+
+    for num in nums:
+        if num not in unqiues_list:
+            unqiues_list.add(num)
+            output_list.append(num)
+
+    return output_list
+    
 
 """
 Time and Space Analysis for problem 2:
@@ -110,3 +137,11 @@ Time and Space Analysis for problem 5:
 - Why this approach?
 - Could it be optimized?
 """
+
+
+
+
+
+if __name__ == "__main__":
+    #most_frequent tests
+    for i in range(1000):
