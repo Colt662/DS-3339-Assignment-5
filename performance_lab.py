@@ -73,7 +73,6 @@ Time and Space Analysis for problem 2:
 - Could it be optimized? The uniques_list could possibly be created as a set from the list, instead of being added on to in the loop, but it would still be O(n)
 """
 
-
 # 🔍 Problem 3: Return All Pairs That Sum to Target
 # Write a function that returns all unique pairs of numbers in the list that sum to a target.
 # Order of output does not matter. Assume input list has no duplicates.
@@ -83,17 +82,25 @@ Time and Space Analysis for problem 2:
 # Output: [(1, 4), (2, 3)]
 
 def find_pairs(nums, target):
-    # Your code here
-    pass
+    nums = set(nums) #no order wanted, no duplicates present/only unqiue pairs wanted, fast lookup
+    result = []
+    already_used = set()
+    for num in nums:
+        if num not in already_used: 
+            if (target - num) in nums:
+                result.append((num, target - num))
+                already_used.add(target - num)
+    return result
+
 
 """
 Time and Space Analysis for problem 3:
-- Best-case:
-- Worst-case:
-- Average-case:
+- Best-case: O(n) with no hash collisions
+- Worst-case: O(n^2) with consistent hash collisions
+- Average-case: O(n) Since hash collisions should be infrequent
 - Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Why this approach? The input was assumed to have no duplicates, lists with duplicates also work since it only asks for unique pairings, and sets have O(1) lookup with no hash collisions
+- Could it be optimized? If the list could be sorted quickly, or came sorted, then there could be 2 indexes inserted at the highest and lowest values that could possibly add up to the target, then working towards the middle until no more values that could add up to the target. This would still likely end up with O(n) complexity, but could potentially run faster in scenarios where the list did not contain many pairs that could add to the target. It could possibly also achieve O(log(n)) complexity for lists with no pairs, since the 2 indexes could use binary search to eliminate most possible pairings.  
 """
 
 
@@ -172,6 +179,20 @@ def remove_duplicates_test(list, range_name):
         print(f'Old list = {list}')
         print(f'New list = {new_list}')
 
+def find_pairs_test(list, target, range_name):
+    start = time.time()
+    pairs_list = find_pairs(list, target)
+    end = time.time()
+
+    if len(list) == 0:
+        print(f'Time taken for list with a {range_name:16} pairing of numbers:   {end - start} ')
+    
+    elif len(list) > 30:
+        print(f'Time taken for list with a {range_name:16} pairing of numbers:   {end - start} ')
+
+    else:
+        print(f'Original list: {list}')
+        print(f'Target: {target}   Pairs: {pairs_list}')
 
 if __name__ == "__main__":
     test_consent = input("Would you like to test the most_frequent function? Y/N: ")
@@ -231,3 +252,32 @@ if __name__ == "__main__":
         print("")
         print("**********")
         print("End of remove_duplicates function tests")
+
+
+    test_consent = input("Would you like to test the find_pairs function? Y/N: ")
+    if test_consent.lower() == "y":
+            print("Now testing find_pairs function")
+            print("**********")
+            print("")
+            test_size = 30
+            for i in range(6):
+                baseline_start = time.time()
+    
+                highly_likely_list = list_populator(test_size, test_size // 1000)
+                somewhat_likely_list = list_populator(test_size, test_size // 100)
+                somewhat_unlikely_list = list_populator(test_size, test_size // 10)
+                highly_unlikely_list = list_populator(test_size, test_size)
+    
+                baseline_end = time.time()
+                print(f'Baseline time to populate 4 lists with {test_size:,} elements each: {baseline_end - baseline_start}')
+    
+                find_pairs_test([], 0, "empty")
+                find_pairs_test(highly_likely_list, max((test_size // 1000) + 1, 11), "highy likely")
+                find_pairs_test(somewhat_likely_list, max((test_size // 100) / 2 , 5),  "somewhat likely")
+                find_pairs_test(somewhat_unlikely_list, max((test_size // 100) / 4, 3), "somewhat unlikely")
+                find_pairs_test(highly_unlikely_list, 2, "highly unlikely")
+                test_size = test_size * 10
+    
+            print("")
+            print("**********")
+            print("End of find_pairs function tests")
