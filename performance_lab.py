@@ -110,16 +110,25 @@ Time and Space Analysis for problem 3:
 # add_n_items(6) → should print when resizing happens.
 
 def add_n_items(n):
-    # Your code here
-    pass
+    list_max_size = 1
+    list_length = 0
+    num_resizes = 0
+    while list_length < n:
+        if list_length == list_max_size:
+            print(f'Resizing list from {list_max_size} to {list_max_size * 2}')
+            list_max_size = list_max_size * 2
+            num_resizes = num_resizes + 1
+            list_length = 0 #simulates O(n)
+        list_length = list_length + 1
+        
 
 """
 Time and Space Analysis for problem 4:
-- When do resizes happen?
-- What is the worst-case for a single append?
-- What is the amortized time per append overall?
-- Space complexity:
-- Why does doubling reduce the cost overall?
+- When do resizes happen? When the number if items already in the list is a power of 2
+- What is the worst-case for a single append? O(n) when is causes a resize
+- What is the amortized time per append overall? O(1) becuase resizes happen more infrequently as the list grows
+- Space complexity: O(n), the maximum space taken is 3n when the list is duplicated
+- Why does doubling reduce the cost overall? Because it reduces the amount of times the list has to be resized
 """
 
 # 🔍 Problem 5: Compute Running Totals
@@ -189,6 +198,14 @@ def find_pairs_test(list, target, range_name):
     else:
         print(f'Original list: {list}')
         print(f'Target: {target}   Pairs: {pairs_list}')
+
+def add_n_items_test(size):
+    start = time.time()
+    add_n_items(size)
+    end = time.time()
+
+    print(f'Time taken for adding {size:6} numbers to list {end - start}')
+
 
 if __name__ == "__main__":
     test_consent = input("Would you like to test the most_frequent function? Y/N: ")
@@ -277,3 +294,17 @@ if __name__ == "__main__":
             print("")
             print("**********")
             print("End of find_pairs function tests")
+
+    test_consent = input("Would you like to test the add_n_items function? Y/N: ")
+    if test_consent.lower() == "y":
+        print("Now testing add_n_items function")
+        print("**********")
+        print("")
+        test_size = 1
+        for i in range(8):
+            add_n_items_test(test_size)
+            test_size = test_size * 10
+
+        print("")
+        print("**********")
+        print("End of add_n_items function tests")
