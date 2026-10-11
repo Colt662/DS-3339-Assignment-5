@@ -141,17 +141,28 @@ Time and Space Analysis for problem 4:
 # Because: [1, 1+2, 1+2+3, 1+2+3+4]
 
 def running_total(nums):
-    # Your code here
-    pass
+    if len(nums) == 0:
+        return
+    
+    elif len(nums) == 1:
+        return nums
+
+    output = []
+    output.append(nums[0])
+
+    for i in range(1, len(nums)):
+        output.append(output[i - 1] + nums[i])
+
+    return output
 
 """
 Time and Space Analysis for problem 5:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(n)
+- Worst-case: O(n)
+- Average-case: O(n) There should not be much variation based on input since addition time doesn't vary with the size of an Int
+- Space complexity: O(n) the output list is exactly the same size as the input list
+- Why this approach? It is simple and has minimal time and space complexity
+- Could it be optimized? It might be optimized by adding a varible that stores the previous result, and using that instead of accessing it from the output, but that would still be O(n) and might even take longer depending on the difference between setting a varible and acessing an array
 """
 
 
@@ -213,6 +224,17 @@ def add_n_items_test(size):
 
     print(f'Time taken for adding {size:6} numbers to list {end - start}')
 
+def running_total_test(list):
+    start = time.time()
+    result = running_total(list)
+    end = time.time()
+    
+    if len(list) > 30:
+        print(f'Time taken for list with size {len(list):8} :   {end - start} ')
+
+    else:
+        print(f'Original list: {list}')
+        print(f'Result:        {result}')
 
 if __name__ == "__main__":
     test_consent = input("Would you like to test the most_frequent function? Y/N: ")
@@ -315,3 +337,18 @@ if __name__ == "__main__":
         print("")
         print("**********")
         print("End of add_n_items function tests")
+
+    test_consent = input("Would you like to test the running_total function? Y/N: ")
+    if test_consent.lower() == "y":
+        print("Now testing running_total function")
+        print("**********")
+        print("")
+        test_size = 1
+        for i in range(8):
+            test_list = ordered_unique_list_populator(test_size)
+            running_total_test(test_list)
+            test_size = test_size * 10
+
+        print("")
+        print("**********")
+        print("End of running_total function tests")
