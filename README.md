@@ -1,5 +1,11 @@
 # 🧪 Performance Lab – Test, Analyze, Optimize
 
+## Origin
+
+This project was made for a Data Structures class and is intended to showcase knowledge of time and space complexity.
+
+## Original Instructions 
+
 As a new engineer on the performance optimization team, your job is to evaluate common algorithms not just for correctness, but for how well they scale. In this assignment, you’ll implement several small functions and assess their performance in terms of **time and space complexity**.
 
 Each function includes a prompt and space for your analysis.
