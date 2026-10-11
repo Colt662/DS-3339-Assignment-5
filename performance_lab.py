@@ -162,6 +162,13 @@ def list_populator(size,value_range):
         test_list.append(random.randint(1,value_range))
     return test_list
 
+def ordered_unique_list_populator(size):
+    #TODO see if this ever gets used
+    test_list = []
+    for i in range(size):
+        test_list.append(i)
+    return test_list
+
 def most_frequent_test(list, range_name):
     start = time.time()
     value = most_frequent(list)
@@ -244,7 +251,7 @@ if __name__ == "__main__":
         print("**********")
         print("")
         test_size = 30
-        for i in range(4):
+        for i in range(6):
             baseline_start = time.time()
 
             highly_similar_list = list_populator(test_size, test_size // 1000)
@@ -286,8 +293,8 @@ if __name__ == "__main__":
     
                 find_pairs_test([], 0, "empty")
                 find_pairs_test(highly_likely_list, max((test_size // 1000) + 1, 11), "highy likely")
-                find_pairs_test(somewhat_likely_list, max((test_size // 100) / 2 , 5),  "somewhat likely")
-                find_pairs_test(somewhat_unlikely_list, max((test_size // 100) / 4, 3), "somewhat unlikely")
+                find_pairs_test(somewhat_likely_list, max((test_size // 100) // 2 , 5),  "somewhat likely")
+                find_pairs_test(somewhat_unlikely_list, max((test_size // 100) // 4, 3), "somewhat unlikely")
                 find_pairs_test(highly_unlikely_list, 2, "highly unlikely")
                 test_size = test_size * 10
     
