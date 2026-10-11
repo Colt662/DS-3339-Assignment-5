@@ -166,6 +166,34 @@ Time and Space Analysis for problem 5:
 """
 
 
+def most_frequent_optimized(numbers):
+    if len(numbers) == 0:
+        return 
+
+    most_frequent = numbers[0]
+    highest_frequency = 1
+
+    freq_dict = dict() #fast operations, key:value for number:frequency, space complexity depends on how unique the list is, more unique lists will have higher space complexity
+    for number in numbers: #Whole loop: O(n) on average, O(n^2) worst case if every hash collides and every insertion triggers resize
+        if number in freq_dict: #O(1) avg, O(n) worst if hash collision
+            frequency = freq_dict[number]
+            freq_dict[number] = frequency + 1
+            if frequency > highest_frequency:
+                most_frequent = number
+                highest_frequency = frequency
+
+
+        else:
+            freq_dict[number] = 1 #O(1) avg, O(n) worst if resize
+
+    return most_frequent
+
+"""
+Performance: The intended optimization did not actually have an impact on performance. The thought was that in highly unique lists, the second loop would run through a near n amount of numbers, and that removing said loop would yield better performance. This turned out to not be the case, as the various O(1) operations added to the first loop counteracted the removal of the second ~O(n) avg loop. The space complexity stayed the same. Performace actually seemed to worsen slightly in most cases, however this was inconsistent for highly unique lists. The difference was ~25% slower for similar lists, and between ~10% slower and ~10% faster for highly similar lists. This could change depending on hardware, however I would not expect any significant difference.
+"""
+
+
+
 def list_populator(size,value_range):
     value_range = max(value_range, 10)#no use in smaller range
     test_list = []
@@ -182,10 +210,9 @@ def ordered_unique_list_populator(size):
 
 def most_frequent_test(list, range_name):
     start = time.time()
-    value = most_frequent(list)
+    most_frequent(list)
     end = time.time()
-    print(f'Time taken for list with {range_name:5} range of numbers:   {end - start} ')
-    print(f'Most frequent value: {value}')
+    print(f'[Original ] Time taken for list with {range_name:5} range of numbers:   {end - start} ')
 
 def remove_duplicates_test(list, range_name):
     
@@ -235,6 +262,15 @@ def running_total_test(list):
     else:
         print(f'Original list: {list}')
         print(f'Result:        {result}')
+
+def most_frequent_optimized_test(list, range_name):
+    start = time.time()
+    most_frequent_optimized(list)
+    end = time.time()
+    print(f'[Optimized] Time taken for list with {range_name:5} range of numbers:   {end - start} ')
+
+
+
 
 if __name__ == "__main__":
     test_consent = input("Would you like to test the most_frequent function? Y/N: ")
@@ -352,3 +388,36 @@ if __name__ == "__main__":
         print("")
         print("**********")
         print("End of running_total function tests")
+
+    test_consent = input("Would you like to compare the most_frequent function to its optimization? Y/N: ")
+    if test_consent.lower() == "y":
+        print("Now testing most_frequent function comparison")
+        print("**********")
+        print("")
+        test_size = 1000
+        for i in range(5):
+            baseline_start = time.time()
+
+            test_list_short_range = list_populator(test_size, test_size // 1000 )
+            test_list_mid_range = list_populator(test_size, test_size // 100)
+            test_list_long_range = list_populator(test_size, test_size // 10)
+            test_list_full_range = list_populator(test_size, test_size)
+
+            baseline_end = time.time()
+            print(f'Baseline time to populate 4 lists with {test_size:,} elements each: {baseline_end - baseline_start}')
+
+            most_frequent_test(test_list_short_range, "short")
+            most_frequent_optimized_test(test_list_short_range, "short")
+            most_frequent_test(test_list_mid_range, "mid")
+            most_frequent_optimized_test(test_list_mid_range, "mid")
+            most_frequent_test(test_list_long_range, "long")
+            most_frequent_optimized_test(test_list_long_range, "long")
+            most_frequent_test(test_list_full_range, "full")
+            most_frequent_optimized_test(test_list_full_range, "full")
+
+
+            test_size = test_size * 10
+
+        print("")
+        print("**********")
+        print("End of most_frequent function tests comparison")
