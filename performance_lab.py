@@ -1,3 +1,6 @@
+import random
+import time
+
 # 🔍 Problem 1: Find Most Frequent Element
 # Given a list of integers, return the value that appears most frequently.
 # If there's a tie, return any of the most frequent.
@@ -142,9 +145,58 @@ Time and Space Analysis for problem 5:
 """
 
 
+class Tests:
+
+    def list_populator(size,value_range):
+        test_list = []
+        for i in range(size):
+            test_list.append(random.randint(1,value_range))
+        return test_list
+
+    def most_frequent_test(list, range_name):
+        start = time.time()
+        value = most_frequent(list)
+        end = time.time()
+        print(f'Time taken for list with {range_name:5} range of numbers:   {end - start} ')
+        print(f'Most frequent value: {value}')
 
 
 
 if __name__ == "__main__":
-    #most_frequent tests
-    for i in range(1000):
+    tests = Tests()
+    test_consent = input("Would you like to test the most_frequent function? Y/N:")
+    if test_consent.lower == "y":
+
+        print("Now testing most_frequent function")
+        print("**********")
+        print("")
+        test_size = 10000000
+        baseline_start = time.time()
+
+        test_list_short_range = tests.list_populator(test_size, 50)
+        test_list_mid_range = tests.list_populator(test_size, 250)
+        test_list_long_range = tests.list_populator(test_size, 1000)
+        test_list_full_range = tests.list_populator(test_size, test_size)
+
+        baseline_end = time.time()
+        print(f'Baseline time to populate 4 lists with {test_size:,} elements each: {baseline_end - baseline_start}')
+
+        tests.most_frequent_test(test_list_short_range, "short")
+        tests.most_frequent_test(test_list_mid_range, "mid")
+        tests.most_frequent_test(test_list_long_range, "long")
+        tests.most_frequent_test(test_list_full_range, "full")
+
+        print("")
+        print("**********")
+        print("End of most_frequent function tests")
+
+
+    test_consent = input("Would you like to test the most_frequent function? Y/N:")
+    if test_consent.lower == "y":
+
+
+
+
+
+    
+
