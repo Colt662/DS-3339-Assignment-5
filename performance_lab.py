@@ -45,7 +45,6 @@ Time and Space Analysis for problem 1:
 - Could it be optimized? It could be optimized if the number with the highest frequency was determined in the first loop, although it would still average O(n) time since every element of the list will always need to be accessed. Testing has now shown that for highly unique lists, it would be at most ~5x faster if it was done in the first loop, so still O(n).
 """
 
-
 # 🔍 Problem 2: Remove Duplicates While Preserving Order
 # Write a function that returns a list with duplicates removed but preserves order.
 #
@@ -64,15 +63,14 @@ def remove_duplicates(nums):
 
     return output_list
     
-
 """
 Time and Space Analysis for problem 2:
-- Best-case:
-- Worst-case:
-- Average-case:
-- Space complexity:
-- Why this approach?
-- Could it be optimized?
+- Best-case: O(n) for a list with 1 unique element
+- Worst-case: O(n) for a list with n unique elements
+- Average-case: O(n) for lists with between 1 and n unique elements
+- Space complexity: O(n) since if the list is 100% unqiue a full list and set copy will be created
+- Why this approach? Sets have no ordering so they cannot be used by themselves. To preserve order a set is used for fast comparisons and a seperate list is used to preserve the order of the output
+- Could it be optimized? The uniques_list could possibly be created as a set from the list, instead of being added on to in the loop, but it would still be O(n)
 """
 
 
@@ -159,7 +157,19 @@ def most_frequent_test(list, range_name):
     print(f'Most frequent value: {value}')
 
 def remove_duplicates_test(list, range_name):
-    pass
+    
+    start = time.time()
+    new_list = remove_duplicates(list)
+    end = time.time()
+    if len(list) == 0:
+        print(f'Time taken for list with a {range_name:16} list of numbers:   {end - start} ')
+    
+    elif len(list) > 30:
+        print(f'Time taken for list with a {range_name:16} list of numbers:   {end - start} ')
+
+    else:
+        print(f'Old list = {list}')
+        print(f'New list = {new_list}')
 
 
 if __name__ == "__main__":
@@ -190,12 +200,30 @@ if __name__ == "__main__":
         print("End of most_frequent function tests")
 
 
-    test_consent = input("Would you like to test the most_frequent function? Y/N:")
-    if test_consent.lower == "y":
+    test_consent = input("Would you like to test the remove_duplicates function? Y/N: ")
+    if test_consent.lower() == "y":
+        print("Now testing remove_duplicates function")
+        print("**********")
+        print("")
+        test_size = 30
+        for i in range(2):
+            baseline_start = time.time()
 
+            highly_similar_list = list_populator(test_size, test_size // 1000)
+            somewhat_similar_list = list_populator(test_size, test_size // 100)
+            somewhat_unique_list = list_populator(test_size, test_size // 10)
+            highly_unique_list = list_populator(test_size, test_size)
 
+            baseline_end = time.time()
+            print(f'Baseline time to populate 4 lists with {test_size:,} elements each: {baseline_end - baseline_start}')
 
+            remove_duplicates_test([], "empty")
+            remove_duplicates_test(highly_similar_list, "highy similar")
+            remove_duplicates_test(somewhat_similar_list, "somewhat similar")
+            remove_duplicates_test(somewhat_unique_list, "somewhat unique")
+            remove_duplicates_test(highly_unique_list, "highly unique")
+            test_size = 10000000
 
-
-    
-
+        print("")
+        print("**********")
+        print("End of remove_duplicates function tests")
