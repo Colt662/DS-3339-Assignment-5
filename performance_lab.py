@@ -7,6 +7,9 @@
 # Output: 3
 
 def most_frequent(numbers):
+    if len(numbers) == 0:
+        pass
+
     freq_dict = dict() #fast operations, key:value for number:frequency, space complexity depends on how unique the list is, more unique lists will have higher space complexity
     for number in numbers: #Whole loop: O(n) on average, O(n^2) worst case if every hash collides and every insertion triggers resize
         if number in freq_dict: #O(1) avg, O(n) worst if hash collision
@@ -36,7 +39,7 @@ Time and Space Analysis for problem 1:
 - Average-case: O(n) since hash collisions should be infrequent for most lists and operations that could involve resizing are amoritized to O(1)
 - Space complexity: O(n) if all items are unique, O(1) if all items are the same
 - Why this approach? Dictionaries have fast operations, integers in a similar range should have few hash collisions.
-- Could it be optimized? It could potentially be optimized if the number with the highest frequency was determined in the first loop, although it would still average O(n) time since every element of the list will always need to be accessed.
+- Could it be optimized? It could be optimized if the number with the highest frequency was determined in the first loop, although it would still average O(n) time since every element of the list will always need to be accessed. Testing has now shown that for highly unique lists, it would be at most ~5x faster if it was done in the first loop, so still O(n).
 """
 
 
