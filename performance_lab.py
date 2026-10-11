@@ -144,6 +144,7 @@ Time and Space Analysis for problem 5:
 
 
 def list_populator(size,value_range):
+    value_range = max(value_range, 10)#no use in smaller range
     test_list = []
     for i in range(size):
         test_list.append(random.randint(1,value_range))
@@ -181,9 +182,9 @@ if __name__ == "__main__":
         test_size = 1000000
         baseline_start = time.time()
 
-        test_list_short_range = list_populator(test_size, 50)
-        test_list_mid_range = list_populator(test_size, 250)
-        test_list_long_range = list_populator(test_size, 1000)
+        test_list_short_range = list_populator(test_size, test_size // 1000 )
+        test_list_mid_range = list_populator(test_size, test_size // 100)
+        test_list_long_range = list_populator(test_size, test_size // 10)
         test_list_full_range = list_populator(test_size, test_size)
 
         baseline_end = time.time()
