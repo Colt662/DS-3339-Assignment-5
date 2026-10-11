@@ -11,7 +11,7 @@ import time
 
 def most_frequent(numbers):
     if len(numbers) == 0:
-        pass
+        return 
 
     freq_dict = dict() #fast operations, key:value for number:frequency, space complexity depends on how unique the list is, more unique lists will have higher space complexity
     for number in numbers: #Whole loop: O(n) on average, O(n^2) worst case if every hash collides and every insertion triggers resize
@@ -145,46 +145,45 @@ Time and Space Analysis for problem 5:
 """
 
 
-class Tests:
+def list_populator(size,value_range):
+    test_list = []
+    for i in range(size):
+        test_list.append(random.randint(1,value_range))
+    return test_list
 
-    def list_populator(size,value_range):
-        test_list = []
-        for i in range(size):
-            test_list.append(random.randint(1,value_range))
-        return test_list
+def most_frequent_test(list, range_name):
+    start = time.time()
+    value = most_frequent(list)
+    end = time.time()
+    print(f'Time taken for list with {range_name:5} range of numbers:   {end - start} ')
+    print(f'Most frequent value: {value}')
 
-    def most_frequent_test(list, range_name):
-        start = time.time()
-        value = most_frequent(list)
-        end = time.time()
-        print(f'Time taken for list with {range_name:5} range of numbers:   {end - start} ')
-        print(f'Most frequent value: {value}')
-
+def remove_duplicates_test(list, range_name):
+    pass
 
 
 if __name__ == "__main__":
-    tests = Tests()
-    test_consent = input("Would you like to test the most_frequent function? Y/N:")
-    if test_consent.lower == "y":
-
+    test_consent = input("Would you like to test the most_frequent function? Y/N: ")
+    if test_consent.lower() == "y":
         print("Now testing most_frequent function")
         print("**********")
         print("")
-        test_size = 10000000
+        test_size = 1000000
         baseline_start = time.time()
 
-        test_list_short_range = tests.list_populator(test_size, 50)
-        test_list_mid_range = tests.list_populator(test_size, 250)
-        test_list_long_range = tests.list_populator(test_size, 1000)
-        test_list_full_range = tests.list_populator(test_size, test_size)
+        test_list_short_range = list_populator(test_size, 50)
+        test_list_mid_range = list_populator(test_size, 250)
+        test_list_long_range = list_populator(test_size, 1000)
+        test_list_full_range = list_populator(test_size, test_size)
 
         baseline_end = time.time()
         print(f'Baseline time to populate 4 lists with {test_size:,} elements each: {baseline_end - baseline_start}')
 
-        tests.most_frequent_test(test_list_short_range, "short")
-        tests.most_frequent_test(test_list_mid_range, "mid")
-        tests.most_frequent_test(test_list_long_range, "long")
-        tests.most_frequent_test(test_list_full_range, "full")
+        most_frequent_test([], "empty")
+        most_frequent_test(test_list_short_range, "short")
+        most_frequent_test(test_list_mid_range, "mid")
+        most_frequent_test(test_list_long_range, "long")
+        most_frequent_test(test_list_full_range, "full")
 
         print("")
         print("**********")
