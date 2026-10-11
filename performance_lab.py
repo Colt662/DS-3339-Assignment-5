@@ -179,22 +179,25 @@ if __name__ == "__main__":
         print("Now testing most_frequent function")
         print("**********")
         print("")
-        test_size = 1000000
-        baseline_start = time.time()
+        test_size = 1000
+        for i in range(4):
+            baseline_start = time.time()
 
-        test_list_short_range = list_populator(test_size, test_size // 1000 )
-        test_list_mid_range = list_populator(test_size, test_size // 100)
-        test_list_long_range = list_populator(test_size, test_size // 10)
-        test_list_full_range = list_populator(test_size, test_size)
+            test_list_short_range = list_populator(test_size, test_size // 1000 )
+            test_list_mid_range = list_populator(test_size, test_size // 100)
+            test_list_long_range = list_populator(test_size, test_size // 10)
+            test_list_full_range = list_populator(test_size, test_size)
 
-        baseline_end = time.time()
-        print(f'Baseline time to populate 4 lists with {test_size:,} elements each: {baseline_end - baseline_start}')
+            baseline_end = time.time()
+            print(f'Baseline time to populate 4 lists with {test_size:,} elements each: {baseline_end - baseline_start}')
 
-        most_frequent_test([], "empty")
-        most_frequent_test(test_list_short_range, "short")
-        most_frequent_test(test_list_mid_range, "mid")
-        most_frequent_test(test_list_long_range, "long")
-        most_frequent_test(test_list_full_range, "full")
+            most_frequent_test([], "empty")
+            most_frequent_test(test_list_short_range, "short")
+            most_frequent_test(test_list_mid_range, "mid")
+            most_frequent_test(test_list_long_range, "long")
+            most_frequent_test(test_list_full_range, "full")
+
+            test_size = test_size * 10
 
         print("")
         print("**********")
@@ -207,7 +210,7 @@ if __name__ == "__main__":
         print("**********")
         print("")
         test_size = 30
-        for i in range(2):
+        for i in range(4):
             baseline_start = time.time()
 
             highly_similar_list = list_populator(test_size, test_size // 1000)
@@ -223,7 +226,7 @@ if __name__ == "__main__":
             remove_duplicates_test(somewhat_similar_list, "somewhat similar")
             remove_duplicates_test(somewhat_unique_list, "somewhat unique")
             remove_duplicates_test(highly_unique_list, "highly unique")
-            test_size = 10000000
+            test_size = test_size * 10
 
         print("")
         print("**********")
