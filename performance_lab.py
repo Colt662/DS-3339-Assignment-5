@@ -32,8 +32,6 @@ def most_frequent(numbers):
 
     return most_frequent
 
-    
-
 """
 Info sourced from https://pythoncomplexity.com/builtins/dict/#complexity-reference
 Time and Space Analysis for problem 1:
@@ -42,7 +40,7 @@ Time and Space Analysis for problem 1:
 - Average-case: O(n) since hash collisions should be infrequent for most lists and operations that could involve resizing are amoritized to O(1)
 - Space complexity: O(n) if all items are unique, O(1) if all items are the same
 - Why this approach? Dictionaries have fast operations, integers in a similar range should have few hash collisions.
-- Could it be optimized? It could be optimized if the number with the highest frequency was determined in the first loop, although it would still average O(n) time since every element of the list will always need to be accessed. Testing has now shown that for highly unique lists, it would be at most ~5x faster if it was done in the first loop, so still O(n).
+- Could it be optimized? It could be optimized if the number with the highest frequency was determined in the first loop, although it would still average O(n) time since every element of the list will always need to be accessed.
 """
 
 # 🔍 Problem 2: Remove Duplicates While Preserving Order
@@ -103,7 +101,6 @@ Time and Space Analysis for problem 3:
 - Could it be optimized? If the list could be sorted quickly, or came sorted, then there could be 2 indexes inserted at the highest and lowest values that could possibly add up to the target, then working towards the middle until no more values that could add up to the target. This would still likely end up with O(n) complexity, but could potentially run faster in scenarios where the list did not contain many pairs that could add to the target. It could possibly also achieve O(log(n)) complexity for lists with no pairs, since the 2 indexes could use binary search to eliminate most possible pairings.  
 """
 
-
 # 🔍 Problem 4: Simulate List Resizing (Amortized Cost)
 # Create a function that adds n elements to a list that has a fixed initial capacity.
 # When the list reaches capacity, simulate doubling its size by creating a new list
@@ -124,7 +121,6 @@ Time and Space Analysis for problem 4:
 - Space complexity:
 - Why does doubling reduce the cost overall?
 """
-
 
 # 🔍 Problem 5: Compute Running Totals
 # Write a function that takes a list of numbers and returns a new list
