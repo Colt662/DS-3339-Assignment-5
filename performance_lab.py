@@ -124,11 +124,11 @@ def add_n_items(n):
 
 """
 Time and Space Analysis for problem 4:
-- When do resizes happen? When the number if items already in the list is a power of 2
-- What is the worst-case for a single append? O(n) when is causes a resize
+- When do resizes happen? When the number of items already in the list is a power of 2
+- What is the worst-case for a single append? O(n) when it causes a resize
 - What is the amortized time per append overall? O(1) becuase resizes happen more infrequently as the list grows
-- Space complexity: O(n), the maximum space taken is 3n when the list is duplicated
-- Why does doubling reduce the cost overall? Because it reduces the amount of times the list has to be resized
+- Space complexity: O(n), the maximum space taken is 3n when the list is duplicated before the original is discarded
+- Why does doubling reduce the cost overall? Because it reduces the amount of times the list has to be resized to log_2(n)
 """
 
 # 🔍 Problem 5: Compute Running Totals
